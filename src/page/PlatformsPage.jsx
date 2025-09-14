@@ -23,7 +23,7 @@ const PlatformCard = ({ platform, index }) => {
 export default function PlatformsPage() {
   const allPlatforms = [
     ...platforms,
-    "Facebook", "Instagram", "Twitter", "LinkedIn", "Amazon", "Flipkart"
+    "Facebook", "Instagram", "LinkedIn", "Amazon", "Flipkart"
   ];
 
   return (
