@@ -1,0 +1,13 @@
+:root {
+  --color-primary: #2563EB;       /* main blue */
+  --color-primary-dark: #1E40AF;  /* hover / active */
+  --color-primary-light: #3B82F6; /* accents */
+  --color-hover-light: #c8ddff; /* Hover effect */
+  --color-background: #F9FAFB;    /* page background */
+  --color-card: #FFFFFF;          /* card / sidebar bg */
+  --color-border: #E5E7EB;        /* borders */
+  --color-text: #111827;          /* main text */
+  --color-text-secondary: #6B7280;/* muted text */
+  --color-success: #10B981;       /* green */
+  --color-danger: #EF4444;        /* red */
+}
