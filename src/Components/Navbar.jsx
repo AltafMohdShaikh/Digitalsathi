@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[var(--color-card)] border-b border-[var(--color-border)] px-6 py-4 sticky top-0 z-50">
+      <nav className="bg-[var(--color-card)] border-b border-[var(--color-border)] px-6 py-4 sticky top-0 z-50 shadow-lg">
         <div className="flex items-center justify-between">
           
           {/* Left Section */}
@@ -24,9 +24,9 @@ const Navbar = () => {
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
             
-            <div className="bg-[var(--color-primary-light)] px-4 py-2 rounded-md">
+            <div className="bg-gradient-to-r from-blue-400 to-blue-500 px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <Link to="/">
-                <span className="text-lg font-semibold text-[var(--color-card)]">
+                <span className="text-xl font-bold text-white tracking-wide">
                   Digital Sathi
                 </span>
               </Link>

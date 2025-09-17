@@ -4,7 +4,7 @@ import { PenTool, Calendar, User, Eye } from "lucide-react";
 
 const BlogCard = ({ blog }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-[var(--color-border)] group cursor-pointer">
+    <div className="bg-[var(--color-card)] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-[var(--color-border)] group cursor-pointer">
       <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] mb-3">
         <Calendar size={14} />
         <span>{blog.date}</span>

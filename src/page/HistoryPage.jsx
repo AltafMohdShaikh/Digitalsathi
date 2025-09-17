@@ -5,7 +5,7 @@ import thumbnail8 from "../assets/images/thumbnail8.png";
 
 const HistoryItem = ({ item }) => {
   return (
-    <div className="bg-white flex gap-4 p-4 hover:bg-gray-50 rounded-lg group shadow-sm border border-[var(--color-border)]">
+    <div className="bg-[var(--color-card)] flex gap-4 p-4 hover:bg-[var(--color-hover-light)] rounded-lg group shadow-sm border border-[var(--color-border)]">
       <div className="relative flex-shrink-0">
         <img
           src={thumbnail8}

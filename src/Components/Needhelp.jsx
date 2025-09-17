@@ -81,18 +81,15 @@ export default function NeedHelp() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div
-        className="relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #EBF4FF 0%, #DBEAFE 100%)" }}
-      >
+    <div className="min-h-screen bg-[var(--color-background)]">
+      <div className="relative overflow-hidden bg-[var(--color-background)]">
         <div className="absolute inset-0" style={{ backgroundColor: "var(--color-primary)", opacity: 0.05 }}></div>
         <div className="relative text-center py-16 px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: "var(--color-primary)" }}>
               Need Help?
             </h1>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-[var(--color-text-secondary)] leading-relaxed max-w-2xl mx-auto mb-8">
               We're here to support your digital learning journey! Find answers, get support, or connect with our
               community.
             </p>
@@ -103,8 +100,8 @@ export default function NeedHelp() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5 pb-16">
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Get in Touch</h2>
+            <div className="bg-[var(--color-card)] rounded-2xl p-8 shadow-lg">
+              <h2 className="text-2xl font-bold mb-6 text-[var(--color-text)]">Get in Touch</h2>
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -112,8 +109,8 @@ export default function NeedHelp() {
                     <Mail className="w-5 h-5" style={{ color: "var(--color-primary)" }} />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1 text-gray-900">Email Us</h3>
-                    <p className="text-sm text-gray-600">support@digitalsathi.com</p>
+                    <h3 className="font-semibold mb-1 text-[var(--color-text)]">Email Us</h3>
+                    <p className="text-sm text-[var(--color-text-secondary)]">support@digitalsathi.com</p>
                   </div>
                 </div>
 
@@ -122,8 +119,8 @@ export default function NeedHelp() {
                     <Clock className="w-5 h-5" style={{ color: "var(--color-primary)" }} />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1 text-gray-900">Response Time</h3>
-                    <p className="text-sm text-gray-600">Usually within 24 hours</p>
+                    <h3 className="font-semibold mb-1 text-[var(--color-text)]">Response Time</h3>
+                    <p className="text-sm text-[var(--color-text-secondary)]">Usually within 24 hours</p>
                   </div>
                 </div>
 
@@ -132,8 +129,8 @@ export default function NeedHelp() {
                     <Phone className="w-5 h-5" style={{ color: "var(--color-primary)" }} />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1 text-gray-900">Support Hours</h3>
-                    <p className="text-sm text-gray-600">Mon-Fri, 9:00 AM - 6:00 PM</p>
+                    <h3 className="font-semibold mb-1 text-[var(--color-text)]">Support Hours</h3>
+                    <p className="text-sm text-[var(--color-text-secondary)]">Mon-Fri, 9:00 AM - 6:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -141,13 +138,13 @@ export default function NeedHelp() {
           </div>
 
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl p-8 shadow-lg" id="contact">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Send us a Message</h2>
+            <div className="bg-[var(--color-card)] rounded-2xl p-8 shadow-lg" id="contact">
+              <h2 className="text-2xl font-bold mb-6 text-[var(--color-text)]">Send us a Message</h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-900">Full Name *</label>
+                    <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Full Name *</label>
                     <input
                       type="text"
                       name="name"
@@ -160,7 +157,7 @@ export default function NeedHelp() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-900">Email Address *</label>
+                    <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Email Address *</label>
                     <input
                       type="email"
                       name="email"
@@ -174,7 +171,7 @@ export default function NeedHelp() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-900">Category</label>
+                  <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Category</label>
                   <select
                     name="category"
                     value={formData.category}
@@ -190,7 +187,7 @@ export default function NeedHelp() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-900">Subject *</label>
+                  <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Subject *</label>
                   <input
                     type="text"
                     name="subject"
@@ -203,7 +200,7 @@ export default function NeedHelp() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-900">Message *</label>
+                  <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Message *</label>
                   <textarea
                     name="message"
                     value={formData.message}
@@ -265,17 +262,17 @@ export default function NeedHelp() {
 
         <div className="mt-16" id="faq">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-[var(--color-text)] mb-4">Frequently Asked Questions</h2>
+            <p className="text-[var(--color-text-secondary)] max-w-2xl mx-auto">
               Find quick answers to common questions about Digital Sathi platform and services.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
-                <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+              <div key={index} className="bg-[var(--color-card)] rounded-2xl p-6 shadow-lg">
+                <h3 className="text-lg font-semibold text-[var(--color-text)] mb-3">{faq.question}</h3>
+                <p className="text-[var(--color-text-secondary)] leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

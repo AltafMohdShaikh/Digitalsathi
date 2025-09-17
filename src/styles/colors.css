@@ -1,13 +1,31 @@
 :root {
-  --color-primary: #2563EB;       /* main blue */
-  --color-primary-dark: #1E40AF;  /* hover / active */
-  --color-primary-light: #3B82F6; /* accents */
-  --color-hover-light: #c8ddff; /* Hover effect */
-  --color-background: #F9FAFB;    /* page background */
-  --color-card: #FFFFFF;          /* card / sidebar bg */
-  --color-border: #E5E7EB;        /* borders */
-  --color-text: #111827;          /* main text */
-  --color-text-secondary: #6B7280;/* muted text */
-  --color-success: #10B981;       /* green */
-  --color-danger: #EF4444;        /* red */
+  --color-primary: #2563EB;
+  --color-primary-dark: #1E40AF;
+  --color-primary-light: #3B82F6;
+  --color-hover-light: #c8ddff;
+  --color-background: #F9FAFB;
+  --color-card: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-text: #111827;
+  --color-text-secondary: #6B7280;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+}
+
+[data-theme="dark"] {
+  --color-primary: #3B82F6;
+  --color-primary-dark: #2563EB;
+  --color-primary-light: #60A5FA;
+  --color-hover-light: #1C1D32;
+  --color-background: #0A0B15;
+  --color-card: #111422;
+  --color-border: #2A2A2A;
+  --color-text: #FFFFFF;
+  --color-text-secondary: #9CA3AF;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+}
+
+[data-theme="dark"] input::placeholder {
+  color: #9CA3AF;
 }

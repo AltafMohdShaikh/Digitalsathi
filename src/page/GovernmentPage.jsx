@@ -85,7 +85,7 @@ const GovernmentPage = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F9FAFB' }}>
+    <div className="min-h-screen bg-[var(--color-background)]">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div 
@@ -118,7 +118,7 @@ const GovernmentPage = () => {
           {schemes.map((scheme) => (
             <div
               key={scheme.id}
-              className="bg-white rounded-2xl overflow-hidden transition-all duration-500"
+              className="bg-[var(--color-card)] rounded-2xl overflow-hidden transition-all duration-500"
               style={{ 
                 boxShadow: hoveredCard === scheme.id || expandedCard === scheme.id
                   ? '0 25px 50px -12px rgba(0, 0, 0, 0.15)' 
@@ -149,8 +149,7 @@ const GovernmentPage = () => {
                       </span>
                     </div>
                     <h3 
-                      className="text-xl font-bold mb-2"
-                      style={{ color: '#111827' }}
+                      className="text-xl font-bold mb-2 text-[var(--color-text)]"
                     >
                       {scheme.title}
                     </h3>
@@ -194,8 +193,7 @@ const GovernmentPage = () => {
                   <div className="space-y-4">
                     <div>
                       <h4 
-                        className="font-semibold mb-2"
-                        style={{ color: '#111827' }}
+                        className="font-semibold mb-2 text-[var(--color-text)]"
                       >
                         About This Scheme
                       </h4>
@@ -210,8 +208,7 @@ const GovernmentPage = () => {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <h5 
-                          className="font-semibold text-sm mb-1"
-                          style={{ color: '#111827' }}
+                          className="font-semibold text-sm mb-1 text-[var(--color-text)]"
                         >
                           Eligibility
                         </h5>
@@ -224,8 +221,7 @@ const GovernmentPage = () => {
                       </div>
                       <div>
                         <h5 
-                          className="font-semibold text-sm mb-1"
-                          style={{ color: '#111827' }}
+                          className="font-semibold text-sm mb-1 text-[var(--color-text)]"
                         >
                           Key Benefits
                         </h5>
@@ -261,14 +257,12 @@ const GovernmentPage = () => {
       {/* Call to Action */}
       <div className="text-center py-16 px-4">
         <h2 
-          className="text-3xl font-bold mb-4"
-          style={{ color: '#111827' }}
+          className="text-3xl font-bold mb-4 text-[var(--color-text)]"
         >
           Need Help Finding the Right Scheme?
         </h2>
         <p 
-          className="text-lg mb-8 max-w-2xl mx-auto"
-          style={{ color: '#6B7280' }}
+          className="text-lg mb-8 max-w-2xl mx-auto text-[var(--color-text-secondary)]"
         >
           Our team can help you identify and apply for government schemes that match your needs and eligibility.
         </p>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Routes, Route } from "react-router-dom";
-
+import { ThemeProvider } from './Components/ThemeContext';
 
 import Navbar from './Components/Navbar'
 import Home from "./page/Home";
@@ -14,11 +14,9 @@ import Layout from './page/Layout';
 import GovernmentPage from './page/GovernmentPage';
 import Needhelp from './Components/Needhelp';
 
-
-
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -33,7 +31,7 @@ function App() {
         </Route>
         <Route path="/video" element={<VideoPage />} />
       </Routes>
-    </>
+    </ThemeProvider>
   )
 }
 
