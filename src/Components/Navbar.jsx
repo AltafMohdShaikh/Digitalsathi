@@ -48,8 +48,9 @@ const Navbar = () => {
                 </span>
               </Link>
             </div>
-            <Link to="/blog" className="text-[var(--color-text)] font-medium hidden md:block hover:text-[var(--color-primary)] transition-colors">
+            <Link to="/blog" className="relative text-[var(--color-text)] font-medium hidden md:block hover:text-[var(--color-primary)] transition-colors group">
               Blog
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[var(--color-primary)] transition-all duration-300 group-hover:w-full"></span>
             </Link>
           </div>
 
@@ -62,14 +63,15 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search tutorials, schemes, events..."
-                className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200"
+                className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
               />
             </div>
           </div>
 
           {/* Right Section */}
-          <button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] px-4 py-2 rounded-md font-medium text-[var(--color-card)] transition-colors">
-            Log in
+          <button className="relative bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] px-4 py-2 rounded-md font-medium text-[var(--color-card)] transition-colors group overflow-hidden">
+            Login
+            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
           </button>
         </div>
       </nav>
@@ -86,7 +88,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
                 />
               </div>
             </div>
@@ -117,9 +119,6 @@ const Navbar = () => {
                   <span>Need Help?</span>
                 </NavLink>
                 <MobileThemeToggle />
-                <NavLink to="/settings" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                  <span>Settings</span>
-                </NavLink>
               </div>
             </div>
         </div>

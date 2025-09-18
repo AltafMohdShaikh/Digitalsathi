@@ -30,7 +30,7 @@ const Sidebar = () => {
     "bg-gradient-to-r from-blue-400 to-blue-500 font-bold text-white shadow-xl transform translate-x-2 border-blue-400/30";
 
   return (
-    <div className="w-64 h-screen bg-[var(--color-card)] border-r border-[var(--color-border)] flex flex-col justify-between shadow-2xl lg:flex hidden flex-shrink-0">
+    <div className="w-64 min-h-[calc(100vh-80px)] bg-[var(--color-card)] border-r border-[var(--color-border)] flex flex-col justify-between shadow-2xl lg:flex hidden flex-shrink-0">
       {/* Top Menu */}
       <div className="p-6 space-y-3">
         <NavLink to="/" end className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)}>
@@ -59,9 +59,6 @@ const Sidebar = () => {
           <span className="group-hover:font-medium transition-all duration-300">Need Help?</span>
         </NavLink>
         <ThemeToggle />
-        <NavLink to="/settings" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)}>
-          <span className="group-hover:font-medium transition-all duration-300">Settings</span>
-        </NavLink>
       </div>
     </div>
   );

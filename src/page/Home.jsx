@@ -16,7 +16,7 @@ export default function Home() {
             <div className="relative py-12 mb-8">
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] opacity-5 rounded-3xl"></div>
                 <div className="relative text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] bg-clip-text text-transparent">
+                    <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] bg-clip-text text-transparent leading-tight py-2">
                         Welcome to Digital Sathi
                     </h1>
                     <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto">

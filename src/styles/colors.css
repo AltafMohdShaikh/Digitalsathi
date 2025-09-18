@@ -29,3 +29,15 @@
 [data-theme="dark"] input::placeholder {
   color: #9CA3AF;
 }
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  color: #FFFFFF;
+}
