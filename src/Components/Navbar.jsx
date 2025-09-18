@@ -22,9 +22,10 @@ const MobileThemeToggle = () => {
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
-  const linkClasses = "block px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:translate-x-1 hover:shadow-sm text-[var(--color-text)]";
-  const activeClasses = "bg-[var(--color-primary-light)] font-semibold text-[var(--color-card)] shadow-md transform translate-x-1";
+  const linkClasses = "block px-6 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:translate-x-2 hover:shadow-lg group border border-transparent hover:border-[var(--color-primary)]/20 text-[var(--color-text)]";
+  const activeClasses = "bg-gradient-to-r from-blue-400 to-blue-500 font-bold text-white shadow-xl transform translate-x-2 border-blue-400/30";
 
   return (
     <>
@@ -69,10 +70,21 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <button className="relative bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] px-4 py-2 rounded-md font-medium text-[var(--color-card)] transition-colors group overflow-hidden">
-            Login
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-          </button>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={toggleTheme}
+              className="p-2 rounded-md hover:bg-[var(--color-hover-light)] transition-colors text-[var(--color-text)]" 
+              title="Toggle Theme"
+            >
+              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
+            <button className="relative bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] px-4 py-2 rounded-md font-medium text-[var(--color-card)] transition-colors group overflow-hidden">
+              <span className="relative">
+                Login
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+              </span>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -94,32 +106,29 @@ const Navbar = () => {
             </div>
             <div className="p-6 space-y-3">
               <NavLink to="/" end className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Home</span>
+                <span className="group-hover:font-medium transition-all duration-300">Home</span>
               </NavLink>
               <NavLink to="/platforms" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Digital Platforms</span>
+                <span className="group-hover:font-medium transition-all duration-300">Digital Platforms</span>
               </NavLink>
               <NavLink to="/events" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Events</span>
+                <span className="group-hover:font-medium transition-all duration-300">Events</span>
               </NavLink>
               <NavLink to="/videos" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Videos</span>
+                <span className="group-hover:font-medium transition-all duration-300">Videos</span>
               </NavLink>
               <NavLink to="/schemes" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Government Schemes</span>
+                <span className="group-hover:font-medium transition-all duration-300">Government Schemes</span>
               </NavLink>
               <NavLink to="/history" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>History</span>
+                <span className="group-hover:font-medium transition-all duration-300">History</span>
               </NavLink>
               <NavLink to="/blog" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Blog</span>
+                <span className="group-hover:font-medium transition-all duration-300">Blog</span>
               </NavLink>
-              <div className="border-t border-[var(--color-border)] pt-4 mt-6">
-                <NavLink to="/needhelp" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
-                  <span>Need Help?</span>
-                </NavLink>
-                <MobileThemeToggle />
-              </div>
+              <NavLink to="/needhelp" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
+                <span className="group-hover:font-medium transition-all duration-300">Need Help?</span>
+              </NavLink>
             </div>
         </div>
       )}

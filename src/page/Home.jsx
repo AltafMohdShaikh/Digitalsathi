@@ -14,7 +14,7 @@ export default function Home() {
         <div className="px-6 bg-[var(--color-background)] min-h-screen">
             {/* Hero Section */}
             <div className="relative py-12 mb-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] opacity-5 rounded-3xl"></div>
+                <div className="absolute inset-0 mt-2 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] opacity-5 rounded-3xl"></div>
                 <div className="relative text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] bg-clip-text text-transparent leading-tight py-2">
                         Welcome to Digital Sathi

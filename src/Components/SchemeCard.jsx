@@ -17,7 +17,7 @@ const SchemeCard = ({ scheme, getColorClasses }) => {
   const IconComponent = getSchemeIcon(scheme.title);
   
   return (
-    <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border-2 border-transparent hover:border-opacity-20 h-full group cursor-pointer overflow-hidden">
+    <div className="relative bg-[var(--color-card)] rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border-2 border-[var(--color-border)] hover:border-opacity-20 h-full group cursor-pointer overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute top-0 right-0 w-32 h-32 opacity-5 transform rotate-12 translate-x-8 -translate-y-8">
         <IconComponent size={128} className={colorClasses.text} />
@@ -35,13 +35,13 @@ const SchemeCard = ({ scheme, getColorClasses }) => {
         <div className={`inline-flex p-4 rounded-2xl ${colorClasses.bg} group-hover:scale-110 transition-all duration-300 shadow-lg`}>
           <IconComponent size={28} className={colorClasses.text} />
         </div>
-        <h3 className="font-bold text-2xl mt-4 text-gray-800 group-hover:text-gray-900 transition-colors duration-300">
+        <h3 className="font-bold text-2xl mt-4 text-[var(--color-text)] group-hover:text-[var(--color-primary)] transition-colors duration-300">
           {scheme.title}
         </h3>
       </div>
       
       {/* Description */}
-      <p className="text-gray-600 mb-8 leading-relaxed text-base">
+      <p className="text-[var(--color-text-secondary)] mb-8 leading-relaxed text-base">
         {scheme.description}
       </p>
       

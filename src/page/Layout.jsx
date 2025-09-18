@@ -9,7 +9,7 @@ export default function Layout() {
       <Sidebar />
 
       {/* Main content changes */}
-      <div className="flex-1 overflow-y-auto scrollbar-hide w-full lg:w-auto">
+      <div className="flex-1 overflow-y-auto scrollbar-hide w-full lg:w-auto lg:ml-64">
         <Outlet />  {/* This will load Homefeed, EventPage, VideoPage, etc. */}
       </div>
     </div>

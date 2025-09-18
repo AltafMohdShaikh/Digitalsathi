@@ -41,3 +41,13 @@
 [data-theme="dark"] select:focus {
   color: #FFFFFF;
 }
+
+/* Hide scrollbars globally */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* WebKit */
+}

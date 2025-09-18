@@ -176,7 +176,7 @@ export default function NeedHelp() {
                     name="category"
                     value={formData.category}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500"
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-text)] transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500"
                   >
                     {categories.map((cat) => (
                       <option key={cat.value} value={cat.value}>
