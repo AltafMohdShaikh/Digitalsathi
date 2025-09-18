@@ -77,16 +77,10 @@ const EventPage = () => {
         ></div>
         <div className="relative text-center py-20 px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 
-              className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent"
-              style={{ color: '#2563EB' }}
-            >
+            <h1 className="text-6xl font-bold mb-6 text-[var(--color-text)]">
               Discover Amazing Events
             </h1>
-            <p 
-              className="text-xl leading-relaxed max-w-2xl mx-auto"
-              style={{ color: '#6B7280' }}
-            >
+            <p className="text-xl leading-relaxed max-w-2xl mx-auto text-[var(--color-text-secondary)]">
               Connect, learn, and grow with our carefully curated collection of events designed to inspire and educate professionals across industries.
             </p>
           </div>
@@ -161,53 +155,30 @@ const EventPage = () => {
 
               {/* Event Content */}
               <div className="p-6">
-                <h3 
-                  className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors duration-300"
-                  style={{ color: '#111827' }}
-                >
+                <h3 className="text-xl font-bold mb-3 text-[var(--color-text)] group-hover:text-[var(--color-primary)] transition-colors duration-300">
                   {event.title}
                 </h3>
 
-                <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-4 mb-4">
                   <div className="flex items-center gap-2">
-                    <Calendar size={16} style={{ color: '#6B7280' }} />
-                    <span className="text-sm" style={{ color: '#6B7280' }}>
+                    <Calendar size={16} className="text-[var(--color-text-secondary)]" />
+                    <span className="text-sm text-[var(--color-text-secondary)]">
                       {event.date}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock size={16} style={{ color: '#6B7280' }} />
-                    <span className="text-sm" style={{ color: '#6B7280' }}>
+                    <Clock size={16} className="text-[var(--color-text-secondary)]" />
+                    <span className="text-sm text-[var(--color-text-secondary)]">
                       {event.time}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin size={16} style={{ color: '#6B7280' }} />
-                    <span className="text-sm" style={{ color: '#6B7280' }}>
-                      {event.location}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users size={16} style={{ color: '#6B7280' }} />
-                    <span className="text-sm" style={{ color: '#6B7280' }}>
-                      {event.attendees} attendees
                     </span>
                   </div>
                 </div>
 
-                <p 
-                  className="text-sm leading-relaxed mb-6"
-                  style={{ color: '#6B7280' }}
-                >
+                <p className="text-sm leading-relaxed mb-6 text-[var(--color-text-secondary)]">
                   {event.description}
                 </p>
 
-                <button 
-                  className="w-full py-3 px-4 rounded-xl font-semibold text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg"
-                  style={{ backgroundColor: '#2563EB' }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#1E40AF'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#2563EB'}
-                >
+                <button className="w-full py-3 px-4 rounded-xl font-semibold text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg transform hover:scale-105">
                   View Details
                   <ArrowRight 
                     size={16} 
@@ -230,24 +201,13 @@ const EventPage = () => {
 
       {/* Call to Action */}
       <div className="text-center py-16 px-4">
-        <h2 
-          className="text-3xl font-bold mb-4"
-          style={{ color: '#111827' }}
-        >
+        <h2 className="text-3xl font-bold mb-4 text-[var(--color-text)]">
           Don't Miss Out!
         </h2>
-        <p 
-          className="text-lg mb-8 max-w-2xl mx-auto"
-          style={{ color: '#6B7280' }}
-        >
+        <p className="text-lg mb-8 max-w-2xl mx-auto text-[var(--color-text-secondary)]">
           Stay updated with the latest events and never miss an opportunity to learn and network.
         </p>
-        <button 
-          className="px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:shadow-lg transform hover:scale-105"
-          style={{ backgroundColor: '#2563EB' }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#1E40AF'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#2563EB'}
-        >
+        <button className="px-8 py-4 rounded-xl font-semibold text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] transition-all duration-300 hover:shadow-lg transform hover:scale-105">
           Subscribe to Updates
         </button>
       </div>

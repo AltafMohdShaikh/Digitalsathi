@@ -1,12 +1,29 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from './ThemeContext';
 import '../styles/colors.css'
+
+const MobileThemeToggle = () => {
+  const { theme, toggleTheme } = useTheme();
+  
+  return (
+    <button 
+      onClick={toggleTheme}
+      className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] text-[var(--color-text)] w-full text-left"
+    >
+      {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+      <span className="font-medium">
+        {theme === 'light' ? 'Dark Theme' : 'Light Theme'}
+      </span>
+    </button>
+  );
+};
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const linkClasses = "block px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:translate-x-1 hover:shadow-sm";
+  const linkClasses = "block px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:translate-x-1 hover:shadow-sm text-[var(--color-text)]";
   const activeClasses = "bg-[var(--color-primary-light)] font-semibold text-[var(--color-card)] shadow-md transform translate-x-1";
 
   return (
@@ -99,6 +116,7 @@ const Navbar = () => {
                 <NavLink to="/needhelp" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
                   <span>Need Help?</span>
                 </NavLink>
+                <MobileThemeToggle />
                 <NavLink to="/settings" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
                   <span>Settings</span>
                 </NavLink>
