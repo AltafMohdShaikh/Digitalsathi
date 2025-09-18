@@ -46,7 +46,7 @@ const Sidebar = () => {
           <span className="group-hover:font-medium transition-all duration-300">Videos</span>
         </NavLink>
         <NavLink to="/schemes" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)}>
-          <span className="group-hover:font-medium transition-all duration-300">Government Schemes</span>
+          <span className="group-hover:font-small transition-all duration-300">Government Schemes</span>
         </NavLink>
         <NavLink to="/history" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)}>
           <span className="group-hover:font-medium transition-all duration-300">History</span>
