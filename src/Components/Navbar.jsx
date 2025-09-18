@@ -38,7 +38,7 @@ const Navbar = () => {
               className="lg:hidden p-2 rounded-md hover:bg-[var(--color-hover-light)] transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMobileMenuOpen ? <X size={20} className="text-[var(--color-text)]" /> : <Menu size={20} className="text-[var(--color-text)]" />}
             </button>
             
             <div className="bg-gradient-to-r from-blue-400 to-blue-500 px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">

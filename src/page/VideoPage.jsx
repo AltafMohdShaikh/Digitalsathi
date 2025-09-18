@@ -16,40 +16,40 @@ const VideoPage = () => {
   ];
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: '#F9FAFB' }}>
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[var(--color-background)]">
       {/* Left Side - Video Section */}
-      <div className="flex-1 p-6">
+      <div className="w-full lg:flex-1 p-4 lg:p-6">
         {/* Video Player */}
-        <div className="w-full rounded-2xl overflow-hidden shadow-lg mb-6" style={{ backgroundColor: '#111827' }}>
+        <div className="w-full max-w-full rounded-xl lg:rounded-2xl overflow-hidden shadow-lg mb-6" style={{ backgroundColor: '#111827' }}>
           <video
             src="src/assets/images/video.mp4"
             controls
-            className="w-full h-[500px] rounded-2xl"
+            className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] object-cover"
             poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23374151'/%3E%3C/svg%3E"
           />
         </div>
 
         {/* Video Title */}
-        <h1 className="text-2xl font-bold mb-4" style={{ color: '#111827' }}>
+        <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 text-[var(--color-text)] leading-tight">
           Complete Guide to Modern Web Development
         </h1>
 
         {/* Channel Info & Actions */}
-        <div className="flex items-center justify-between mb-6 pb-6" style={{ borderBottom: '1px solid #E5E7EB' }}>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 pb-6 border-b border-[var(--color-border)] gap-4">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
               TC
             </div>
             <div>
-              <h2 className="font-semibold" style={{ color: '#111827' }}>TechChannel Pro</h2>
-              <p className="text-sm" style={{ color: '#6B7280' }}>1.2M subscribers</p>
+              <h2 className="font-semibold text-[var(--color-text)]">TechChannel Pro</h2>
+              <p className="text-sm text-[var(--color-text-secondary)]">1.2M subscribers</p>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsSubscribed(!isSubscribed)}
-              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2 rounded-full font-semibold transition-all duration-300 text-sm ${
                 isSubscribed ? 'bg-gray-200 text-gray-700' : 'text-white'
               }`}
               style={{ 
@@ -64,38 +64,40 @@ const VideoPage = () => {
         </div>
 
         {/* Video Stats & Actions */}
-        <div className="flex items-center gap-6 mb-6">
-          <div className="flex items-center gap-2" style={{ color: '#6B7280' }}>
-            <Eye size={16} />
-            <span className="text-sm">45,782 views</span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-6">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-[var(--color-text-secondary)]">
+              <Eye size={16} />
+              <span className="text-sm">45,782 views</span>
+            </div>
+            <div className="flex items-center gap-2 text-[var(--color-text-secondary)]">
+              <Clock size={16} />
+              <span className="text-sm">2 days ago</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2" style={{ color: '#6B7280' }}>
-            <Clock size={16} />
-            <span className="text-sm">2 days ago</span>
-          </div>
-          <div className="flex items-center gap-2 ml-auto">
+          <div className="flex items-center gap-2">
             <button 
               onClick={() => {setIsLiked(!isLiked); setLikes(isLiked ? likes-1 : likes+1)}}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full transition-all duration-300 text-sm ${
                 isLiked ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 hover:bg-gray-200'
               }`}
             >
               <ThumbsUp size={16} />
-              <span className="text-sm">{likes.toLocaleString()}</span>
+              <span className="hidden sm:inline">{likes.toLocaleString()}</span>
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300">
+            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-[var(--color-hover-light)] hover:bg-[var(--color-border)] transition-all duration-300 text-[var(--color-text)]">
               <Share2 size={16} />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300">
+            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-[var(--color-hover-light)] hover:bg-[var(--color-border)] transition-all duration-300 text-[var(--color-text)]">
               <Download size={16} />
             </button>
           </div>
         </div>
 
         {/* Description */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm" style={{ borderColor: '#E5E7EB', border: '1px solid' }}>
-          <h3 className="font-semibold mb-3" style={{ color: '#111827' }}>About this video</h3>
-          <p className="leading-relaxed" style={{ color: '#6B7280' }}>
+        <div className="bg-[var(--color-card)] p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-[var(--color-border)]">
+          <h3 className="font-semibold mb-3 text-[var(--color-text)] text-sm sm:text-base">About this video</h3>
+          <p className="leading-relaxed text-[var(--color-text-secondary)] text-sm sm:text-base">
             Learn modern web development from scratch! This comprehensive tutorial covers React, Node.js, 
             and database integration. Perfect for beginners and intermediate developers looking to enhance 
             their skills. We'll build a complete application step by step.
@@ -104,14 +106,14 @@ const VideoPage = () => {
       </div>
 
       {/* Right Side - Suggestions */}
-      <div className="w-96 p-6" style={{ borderLeft: '1px solid #E5E7EB' }}>
-        <h3 className="text-lg font-semibold mb-6" style={{ color: '#111827' }}>Up Next</h3>
+      <div className="w-full lg:w-96 p-4 lg:p-6 border-t lg:border-t-0 lg:border-l border-[var(--color-border)]">
+        <h3 className="text-lg font-semibold mb-6 text-[var(--color-text)]">Up Next</h3>
         
         <div className="space-y-4">
           {suggestions.map((video, i) => (
-            <div key={i} className="flex gap-3 p-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-white hover:shadow-md group">
+            <div key={i} className="flex gap-3 p-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:shadow-md group">
               <div className="relative">
-                <div className="w-36 h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg flex items-center justify-center">
+                <div className="w-28 sm:w-36 h-16 sm:h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg flex items-center justify-center">
                   <Play size={20} className="text-white opacity-70" />
                 </div>
                 <div className="absolute bottom-1 right-1 px-1 py-0.5 bg-black bg-opacity-70 text-white text-xs rounded">
@@ -119,11 +121,11 @@ const VideoPage = () => {
                 </div>
               </div>
               <div className="flex-1">
-                <h4 className="font-medium text-sm mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors" style={{ color: '#111827' }}>
+                <h4 className="font-medium text-sm mb-1 line-clamp-2 group-hover:text-[var(--color-primary)] transition-colors text-[var(--color-text)]">
                   {video.title}
                 </h4>
-                <p className="text-xs mb-1" style={{ color: '#6B7280' }}>{video.channel}</p>
-                <p className="text-xs" style={{ color: '#6B7280' }}>
+                <p className="text-xs mb-1 text-[var(--color-text-secondary)]">{video.channel}</p>
+                <p className="text-xs text-[var(--color-text-secondary)]">
                   {video.views} views • {video.time}
                 </p>
               </div>
