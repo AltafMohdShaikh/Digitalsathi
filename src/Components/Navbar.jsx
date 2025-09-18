@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[var(--color-card)] border-b border-[var(--color-border)] px-6 py-4 sticky top-0 z-50 shadow-lg">
+      <nav className="bg-[var(--color-card)] px-6 py-4 sticky top-0 z-50 shadow-lg">
         <div className="flex items-center justify-between">
           
           {/* Left Section */}
