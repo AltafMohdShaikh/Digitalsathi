@@ -4,7 +4,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from './ThemeContext';
 import '../styles/colors.css'
 import lightLogo from '../assets/icons/Digital-logo(light).png';
-import darkLogo from '../assets/icons/Digital-logo(Dark).png';
+import darkLogo from '../assets/icons/Digital-Logo(Dark).png';
 
 const MobileThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
