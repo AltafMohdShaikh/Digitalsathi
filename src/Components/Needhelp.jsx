@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Send, Mail, Phone, CheckCircle, AlertCircle, Clock } from "lucide-react"
+import { Send, Mail, Phone, CheckCircle, AlertCircle, Clock, HelpCircle, MessageCircle, Headphones, Shield, Users, Heart, Lightbulb, Search, BookOpen, Star, Zap, Globe, Settings, Info, LifeBuoy, Compass } from "lucide-react"
 
 export default function NeedHelp() {
   const [formData, setFormData] = useState({
@@ -85,7 +85,56 @@ export default function NeedHelp() {
       <div className="relative overflow-hidden bg-[var(--color-background)]">
         <div className="absolute inset-0" style={{ backgroundColor: "var(--color-primary)", opacity: 0.05 }}></div>
         <div className="relative text-center py-16 px-4">
-          <div className="max-w-4xl mx-auto">
+          {/* Help Icons */}
+          <div className="absolute top-4 right-4 opacity-20 transform rotate-12">
+            <HelpCircle size={64} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-4 left-4 opacity-20 transform -rotate-12">
+            <MessageCircle size={60} className="text-blue-500" />
+          </div>
+          <div className="absolute top-8 left-8 opacity-15 transform rotate-45">
+            <Headphones size={56} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
+            <Shield size={52} className="text-blue-500" />
+          </div>
+          <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90 hidden lg:block">
+            <Users size={48} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45 hidden lg:block">
+            <Heart size={44} className="text-blue-500" />
+          </div>
+          <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60 hidden lg:block">
+            <Lightbulb size={40} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60 hidden lg:block">
+            <Search size={36} className="text-blue-500" />
+          </div>
+          <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15 hidden lg:block">
+            <BookOpen size={32} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15 hidden lg:block">
+            <Star size={28} className="text-blue-500" />
+          </div>
+          <div className="absolute top-6 left-16 opacity-8 transform rotate-75 hidden lg:block">
+            <Zap size={24} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75 hidden lg:block">
+            <Globe size={24} className="text-blue-500" />
+          </div>
+          <div className="absolute top-24 right-20 opacity-8 transform rotate-30 hidden lg:block">
+            <Settings size={20} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30 hidden lg:block">
+            <Info size={20} className="text-blue-500" />
+          </div>
+          <div className="absolute top-28 left-24 opacity-6 transform rotate-120 hidden lg:block">
+            <LifeBuoy size={16} className="text-blue-500" />
+          </div>
+          <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120 hidden lg:block">
+            <Compass size={16} className="text-blue-500" />
+          </div>
+          <div className="max-w-4xl mx-auto relative z-10">
             <h1 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: "var(--color-primary)" }}>
               Need Help?
             </h1>

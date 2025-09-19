@@ -29,52 +29,52 @@ export default function Home() {
                 <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
                     <Globe size={52} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90">
+                <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90 hidden lg:block">
                     <Shield size={48} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45">
+                <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45 hidden lg:block">
                     <Code size={44} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60">
+                <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60 hidden lg:block">
                     <Database size={40} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60">
+                <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60 hidden lg:block">
                     <Cloud size={36} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15">
+                <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15 hidden lg:block">
                     <Monitor size={32} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15">
+                <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15 hidden lg:block">
                     <Tablet size={28} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-6 left-16 opacity-8 transform rotate-75">
+                <div className="absolute top-6 left-16 opacity-8 transform rotate-75 hidden lg:block">
                     <Mouse size={24} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75">
+                <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75 hidden lg:block">
                     <Keyboard size={24} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-24 right-20 opacity-8 transform rotate-30">
+                <div className="absolute top-24 right-20 opacity-8 transform rotate-30 hidden lg:block">
                     <Headphones size={20} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30">
+                <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30 hidden lg:block">
                     <Camera size={20} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-28 left-24 opacity-6 transform rotate-120">
+                <div className="absolute top-28 left-24 opacity-6 transform rotate-120 hidden lg:block">
                     <Printer size={16} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120">
+                <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120 hidden lg:block">
                     <Router size={16} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-32 right-32 opacity-6 transform rotate-180">
+                <div className="absolute top-32 right-32 opacity-6 transform rotate-180 hidden lg:block">
                     <Cpu size={12} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-32 left-32 opacity-6 transform rotate-270">
+                <div className="absolute bottom-32 left-32 opacity-6 transform rotate-270 hidden lg:block">
                     <HardDrive size={12} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute top-36 left-40 opacity-6 transform rotate-45">
+                <div className="absolute top-36 left-40 opacity-6 transform rotate-45 hidden lg:block">
                     <Battery size={14} className="text-[var(--color-primary)]" />
                 </div>
-                <div className="absolute bottom-36 right-40 opacity-6 transform -rotate-45">
+                <div className="absolute bottom-36 right-40 opacity-6 transform -rotate-45 hidden lg:block">
                     <Zap size={14} className="text-[var(--color-primary)]" />
                 </div>
                 <div className="relative text-center">

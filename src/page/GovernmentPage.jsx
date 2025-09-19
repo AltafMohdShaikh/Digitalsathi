@@ -108,40 +108,40 @@ const GovernmentPage = () => {
           <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
             <Gavel size={52} className="text-orange-500" />
           </div>
-          <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90">
+          <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90 hidden lg:block">
             <Briefcase size={48} className="text-orange-500" />
           </div>
-          <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45">
+          <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45 hidden lg:block">
             <CreditCard size={44} className="text-orange-500" />
           </div>
-          <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60">
+          <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60 hidden lg:block">
             <Home size={40} className="text-orange-500" />
           </div>
-          <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60">
+          <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60 hidden lg:block">
             <GraduationCap size={36} className="text-orange-500" />
           </div>
-          <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15">
+          <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15 hidden lg:block">
             <Heart size={32} className="text-orange-500" />
           </div>
-          <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15">
+          <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15 hidden lg:block">
             <Leaf size={28} className="text-orange-500" />
           </div>
-          <div className="absolute top-6 left-16 opacity-8 transform rotate-75">
+          <div className="absolute top-6 left-16 opacity-8 transform rotate-75 hidden lg:block">
             <Zap size={24} className="text-orange-500" />
           </div>
-          <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75">
+          <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75 hidden lg:block">
             <Car size={24} className="text-orange-500" />
           </div>
-          <div className="absolute top-24 right-20 opacity-8 transform rotate-30">
+          <div className="absolute top-24 right-20 opacity-8 transform rotate-30 hidden lg:block">
             <FileText size={20} className="text-orange-500" />
           </div>
-          <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30">
+          <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30 hidden lg:block">
             <Users size={20} className="text-orange-500" />
           </div>
-          <div className="absolute top-28 left-24 opacity-6 transform rotate-120">
+          <div className="absolute top-28 left-24 opacity-6 transform rotate-120 hidden lg:block">
             <Globe size={16} className="text-orange-500" />
           </div>
-          <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120">
+          <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120 hidden lg:block">
             <CheckCircle size={16} className="text-orange-500" />
           </div>
           <div className="max-w-4xl mx-auto relative z-10">
