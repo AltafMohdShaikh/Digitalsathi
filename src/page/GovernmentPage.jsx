@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, ExternalLink, Users, Calendar, IndianRupee, Award } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink, Users, Calendar, IndianRupee, Award, Building, Shield, Scale, Gavel, Briefcase, CreditCard, Home, GraduationCap, Heart, Leaf, Zap, Car, FileText, Globe, CheckCircle } from "lucide-react";
 
 const GovernmentPage = () => {
   const [expandedCard, setExpandedCard] = useState(null);
@@ -95,7 +95,56 @@ const GovernmentPage = () => {
           }}
         ></div>
         <div className="relative text-center py-20 px-4">
-          <div className="max-w-4xl mx-auto">
+          {/* Government Icons */}
+          <div className="absolute top-4 right-4 opacity-20 transform rotate-12">
+            <Building size={64} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-4 left-4 opacity-20 transform -rotate-12">
+            <Shield size={60} className="text-orange-500" />
+          </div>
+          <div className="absolute top-8 left-8 opacity-15 transform rotate-45">
+            <Scale size={56} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
+            <Gavel size={52} className="text-orange-500" />
+          </div>
+          <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90">
+            <Briefcase size={48} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45">
+            <CreditCard size={44} className="text-orange-500" />
+          </div>
+          <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60">
+            <Home size={40} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60">
+            <GraduationCap size={36} className="text-orange-500" />
+          </div>
+          <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15">
+            <Heart size={32} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15">
+            <Leaf size={28} className="text-orange-500" />
+          </div>
+          <div className="absolute top-6 left-16 opacity-8 transform rotate-75">
+            <Zap size={24} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75">
+            <Car size={24} className="text-orange-500" />
+          </div>
+          <div className="absolute top-24 right-20 opacity-8 transform rotate-30">
+            <FileText size={20} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30">
+            <Users size={20} className="text-orange-500" />
+          </div>
+          <div className="absolute top-28 left-24 opacity-6 transform rotate-120">
+            <Globe size={16} className="text-orange-500" />
+          </div>
+          <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120">
+            <CheckCircle size={16} className="text-orange-500" />
+          </div>
+          <div className="max-w-4xl mx-auto relative z-10">
             <h1 
               className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent"
               style={{ color: '#2563EB' }}

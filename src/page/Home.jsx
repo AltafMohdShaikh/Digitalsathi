@@ -2,6 +2,7 @@ import React from "react";
 import "../Feed/Homefeed.css";
 import "../styles/colors.css";
 import { Link } from "react-router-dom";
+import { Smartphone, Laptop, Wifi, Globe, Shield, Code, Database, Cloud, Monitor, Tablet, Mouse, Keyboard, Headphones, Camera, Printer, Router, Cpu, HardDrive, Battery, Zap } from "lucide-react";
 import thumbnail8 from "../assets/images/thumbnail8.png";
 import VideoCard from "../Components/VideoCard";
 import EventCard from "../Components/EventCard";
@@ -15,6 +16,67 @@ export default function Home() {
             {/* Hero Section */}
             <div className="relative py-12 mb-8">
                 <div className="absolute inset-0 mt-2 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] opacity-5 rounded-3xl"></div>
+                {/* Digital Literacy Icons */}
+                <div className="absolute top-4 right-4 opacity-20 transform rotate-12">
+                    <Smartphone size={64} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-4 left-4 opacity-20 transform -rotate-12">
+                    <Laptop size={60} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-8 left-8 opacity-15 transform rotate-45">
+                    <Wifi size={56} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
+                    <Globe size={52} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90">
+                    <Shield size={48} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45">
+                    <Code size={44} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60">
+                    <Database size={40} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60">
+                    <Cloud size={36} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15">
+                    <Monitor size={32} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15">
+                    <Tablet size={28} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-6 left-16 opacity-8 transform rotate-75">
+                    <Mouse size={24} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75">
+                    <Keyboard size={24} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-24 right-20 opacity-8 transform rotate-30">
+                    <Headphones size={20} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30">
+                    <Camera size={20} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-28 left-24 opacity-6 transform rotate-120">
+                    <Printer size={16} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120">
+                    <Router size={16} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-32 right-32 opacity-6 transform rotate-180">
+                    <Cpu size={12} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-32 left-32 opacity-6 transform rotate-270">
+                    <HardDrive size={12} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute top-36 left-40 opacity-6 transform rotate-45">
+                    <Battery size={14} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="absolute bottom-36 right-40 opacity-6 transform -rotate-45">
+                    <Zap size={14} className="text-[var(--color-primary)]" />
+                </div>
                 <div className="relative text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] bg-clip-text text-transparent leading-tight py-2">
                         Welcome to Digital Sathi

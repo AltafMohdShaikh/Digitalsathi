@@ -3,6 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from './ThemeContext';
 import '../styles/colors.css'
+import lightLogo from '../assets/icons/Digital-logo(light).png';
+import darkLogo from '../assets/icons/Digital-logo(Dark).png';
 
 const MobileThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
@@ -29,7 +31,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[var(--color-card)] px-4 py-2 lg:px-6 lg:py-4 sticky top-0 z-50">
+      <nav className="bg-[var(--color-card)] px-4 py-2 lg:px-6 lg:py-4 sticky top-0 z-50 border-b-2 border-[var(--color-primary)]">
         <div className="flex items-center justify-between">
           
           {/* Left Section */}
@@ -42,13 +44,13 @@ const Navbar = () => {
               {isMobileMenuOpen ? <X size={20} className="text-[var(--color-text)]" /> : <Menu size={20} className="text-[var(--color-text)]" />}
             </button>
             
-            <div className="bg-gradient-to-r from-blue-400 to-blue-500 px-3 py-2 lg:px-6 lg:py-3 rounded-lg lg:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-              <Link to="/">
-                <span className="text-lg lg:text-xl font-bold text-white tracking-wide">
-                  Digital Sathi
-                </span>
-              </Link>
-            </div>
+            <Link to="/" className="transition-all duration-300 transform hover:scale-105">
+              <img 
+                src={theme === 'light' ? lightLogo : darkLogo}
+                alt="Digital Sathi"
+                className="h-8 lg:h-10 w-auto"
+              />
+            </Link>
             <Link to="/blog" className="relative text-[var(--color-text)] font-medium hidden md:block hover:text-[var(--color-primary)] transition-colors group">
               Blog
               <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[var(--color-primary)] transition-all duration-300 group-hover:w-full"></span>
