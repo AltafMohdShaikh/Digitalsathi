@@ -137,7 +137,7 @@ const EventPage = () => {
       </div>
 
       {/* Filter Section */}
-      <div className="max-w-7xl mx-auto px-6 mb-8">
+      <div className="max-w-7xl mt-5 mx-auto px-6 mb-8">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-2">
             <Filter size={20} className="text-[var(--color-text-secondary)]" />
@@ -151,7 +151,7 @@ const EventPage = () => {
                 className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
                   filter === category.id
                     ? 'text-white shadow-lg transform scale-105'
-                    : 'bg-[var(--color-card)] text-[var(--color-text)] hover:shadow-md'
+                    : 'bg-[var(--color-card)] text-[var(--color-text)] hover:shadow-sm hover:transform hover:scale-102'
                 }`}
                 style={{
                   backgroundColor: filter === category.id ? '#2563EB' : 'var(--color-card)',
@@ -177,7 +177,7 @@ const EventPage = () => {
               }`}
               style={{ 
                 boxShadow: hoveredCard === event.id 
-                  ? '0 25px 50px -12px rgba(0, 0, 0, 0.15)' 
+                  ? '0 25px 50px -12px rgba(37, 99, 235, 0.3), 0 0 30px rgba(37, 99, 235, 0.2)' 
                   : '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
                 transform: hoveredCard === event.id ? 'translateY(-8px)' : 'translateY(0)'
               }}

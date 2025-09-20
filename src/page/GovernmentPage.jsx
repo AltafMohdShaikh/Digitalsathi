@@ -162,15 +162,15 @@ const GovernmentPage = () => {
       </div>
 
       {/* Schemes Grid */}
-      <div className="max-w-6xl mx-auto px-6 pb-16">
+      <div className="max-w-6xl mx-auto mt-5 px-6 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {schemes.map((scheme) => (
             <div
               key={scheme.id}
-              className="bg-[var(--color-card)] rounded-2xl overflow-hidden transition-all duration-500"
+              className="bg-[var(--color-card)] rounded-2xl overflow-hidden transition-all duration-500 flex flex-col"
               style={{ 
                 boxShadow: hoveredCard === scheme.id || expandedCard === scheme.id
-                  ? '0 25px 50px -12px rgba(0, 0, 0, 0.15)' 
+                  ? '0 25px 50px -12px rgba(37, 99, 235, 0.3), 0 0 30px rgba(37, 99, 235, 0.2)' 
                   : '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
                 transform: hoveredCard === scheme.id ? 'translateY(-4px)' : 'translateY(0)'
               }}
@@ -178,7 +178,7 @@ const GovernmentPage = () => {
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* Card Header */}
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-1">
                 <div className="flex items-start gap-4 mb-4">
                   <div 
                     className={`p-3 rounded-xl text-white ${scheme.color} flex-shrink-0`}
@@ -206,7 +206,7 @@ const GovernmentPage = () => {
                 </div>
 
                 <p 
-                  className="text-sm leading-relaxed mb-4"
+                  className="text-sm leading-relaxed mb-4 flex-1"
                   style={{ color: '#6B7280' }}
                 >
                   {scheme.shortDescription}
@@ -215,7 +215,7 @@ const GovernmentPage = () => {
                 {/* Show More Button */}
                 <button
                   onClick={() => toggleCard(scheme.id)}
-                  className="flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3"
+                  className="flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3 mt-auto"
                   style={{ color: '#2563EB' }}
                 >
                   {expandedCard === scheme.id ? 'Show Less' : 'Show More'}
