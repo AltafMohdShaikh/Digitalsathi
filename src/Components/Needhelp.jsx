@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { Send, Mail, Phone, CheckCircle, AlertCircle, Clock, HelpCircle, MessageCircle, Headphones, Shield, Users, Heart, Lightbulb, Search, BookOpen, Star, Zap, Globe, Settings, Info, LifeBuoy, Compass } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Send, Mail, Phone, CheckCircle, AlertCircle, Clock, HelpCircle, MessageCircle, Headphones, Shield, Users, Heart, Lightbulb, Search, BookOpen, Star, Zap, Globe, Settings, Info, LifeBuoy, Compass, LogIn } from "lucide-react"
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../config/firebase'
+import emailjs from '@emailjs/browser'
 
 export default function NeedHelp() {
+  const [user, loading] = useAuthState(auth)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,6 +17,17 @@ export default function NeedHelp() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+
+  // Auto-fill email when user is logged in
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.displayName || '',
+        email: user.email || ''
+      }))
+    }
+  }, [user])
 
   const categories = [
     { value: "general", label: "General Inquiry" },
@@ -54,22 +69,48 @@ export default function NeedHelp() {
     }))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setIsSubmitting(true)
-
-    try {
-      // Simulating API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      setSubmitStatus("success")
-      setFormData({ name: "", email: "", category: "general", subject: "", message: "" })
-    } catch (error) {
-      setSubmitStatus("error")
-    } finally {
-      setIsSubmitting(false)
+    
+    if (!user) {
+      setSubmitStatus("login-required")
       setTimeout(() => setSubmitStatus(null), 5000)
+      return
     }
+
+    // Create email body with all form data
+    const emailBody = `Hello,
+
+New message from Digital Sathi:
+
+Name: ${formData.name}
+Email: ${formData.email}
+Category: ${formData.category}
+User ID: ${user.uid}
+
+Message:
+${formData.message}
+
+---
+Sent from Digital Sathi Contact Form`
+    
+    // Create mailto link
+    const mailtoLink = `mailto:altafmohdshaikh@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailBody)}`
+    
+    // Open email client
+    window.location.href = mailtoLink
+    
+    // Show success message
+    setSubmitStatus("success")
+    setFormData({ 
+      name: user.displayName || '', 
+      email: user.email || '', 
+      category: "general", 
+      subject: "", 
+      message: "" 
+    })
+    
+    setTimeout(() => setSubmitStatus(null), 5000)
   }
 
   const handleButtonMouseEnter = (e) => {
@@ -159,7 +200,7 @@ export default function NeedHelp() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1 text-[var(--color-text)]">Email Us</h3>
-                    <p className="text-sm text-[var(--color-text-secondary)]">support@digitalsathi.com</p>
+                    <p className="text-sm text-[var(--color-text-secondary)]">altafmohdshaikh@gmail.com</p>
                   </div>
                 </div>
 
@@ -189,6 +230,15 @@ export default function NeedHelp() {
           <div className="lg:col-span-2">
             <div className="bg-[var(--color-card)] rounded-2xl p-8 shadow-lg" id="contact">
               <h2 className="text-2xl font-bold mb-6 text-[var(--color-text)]">Send us a Message</h2>
+              
+              {!user && (
+                <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl flex items-center gap-3">
+                  <LogIn size={20} className="text-yellow-600" />
+                  <p className="text-sm font-medium text-yellow-800">
+                    Please login to send a message. Only authenticated users can contact support.
+                  </p>
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -200,7 +250,8 @@ export default function NeedHelp() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500"
+                      disabled={!user}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -213,7 +264,8 @@ export default function NeedHelp() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500"
+                      disabled={!user}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -225,7 +277,8 @@ export default function NeedHelp() {
                     name="category"
                     value={formData.category}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-text)] transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500"
+                    disabled={!user}
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-text)] transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                   >
                     {categories.map((cat) => (
                       <option key={cat.value} value={cat.value}>
@@ -243,7 +296,8 @@ export default function NeedHelp() {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500"
+                    disabled={!user}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder="Brief description of your inquiry"
                   />
                 </div>
@@ -255,15 +309,16 @@ export default function NeedHelp() {
                     value={formData.message}
                     onChange={handleInputChange}
                     required
+                    disabled={!user}
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent resize-none focus:ring-blue-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 transition-all duration-300 focus:ring-2 focus:border-transparent resize-none focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder="Please provide details about your question or concern..."
                   />
                 </div>
 
                 <button
                   type="submit"
-                  disabled={isSubmitting || !formData.name || !formData.email || !formData.subject || !formData.message}
+                  disabled={!user || isSubmitting || !formData.name || !formData.email || !formData.subject || !formData.message}
                   className="w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 flex items-center justify-center gap-3 hover:shadow-lg transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   style={{ backgroundColor: "var(--color-primary)" }}
                   onMouseEnter={handleButtonMouseEnter}
@@ -277,7 +332,7 @@ export default function NeedHelp() {
                   ) : (
                     <>
                       <Send size={18} />
-                      Send Message
+                      {user ? 'Send Message' : 'Login Required'}
                     </>
                   )}
                 </button>
@@ -288,19 +343,31 @@ export default function NeedHelp() {
                   className={`mt-6 p-4 rounded-xl flex items-center gap-3 ${
                     submitStatus === "success"
                       ? "bg-green-50 border border-green-200"
+                      : submitStatus === "login-required"
+                      ? "bg-yellow-50 border border-yellow-200"
                       : "bg-red-50 border border-red-200"
                   }`}
                 >
                   {submitStatus === "success" ? (
                     <CheckCircle size={20} className="text-green-600" />
+                  ) : submitStatus === "login-required" ? (
+                    <LogIn size={20} className="text-yellow-600" />
                   ) : (
                     <AlertCircle size={20} className="text-red-600" />
                   )}
                   <p
-                    className={`text-sm font-medium ${submitStatus === "success" ? "text-green-800" : "text-red-800"}`}
+                    className={`text-sm font-medium ${
+                      submitStatus === "success" 
+                        ? "text-green-800" 
+                        : submitStatus === "login-required"
+                        ? "text-yellow-800"
+                        : "text-red-800"
+                    }`}
                   >
                     {submitStatus === "success"
-                      ? "Message sent successfully! We'll get back to you soon."
+                      ? "Message delivered successfully! You will receive a reply on your email address."
+                      : submitStatus === "login-required"
+                      ? "Please login first to send a message."
                       : "Failed to send message. Please try again later."}
                   </p>
                 </div>

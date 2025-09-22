@@ -1,6 +1,8 @@
 import React from "react";
 import "../styles/colors.css";
-import { Clock, X } from "lucide-react";
+import { Clock, X, LogIn } from "lucide-react";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../config/firebase';
 import thumbnail8 from "../assets/images/thumbnail8.png";
 
 const HistoryItem = ({ item }) => {
@@ -35,6 +37,41 @@ const HistoryItem = ({ item }) => {
 };
 
 export default function HistoryPage() {
+  const [user, loading] = useAuthState(auth);
+
+  if (loading) {
+    return (
+      <div className="px-6 bg-[var(--color-background)] min-h-screen flex items-center justify-center">
+        <div className="text-[var(--color-text)]">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="px-6 bg-[var(--color-background)] min-h-screen">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between py-6 border-b border-[var(--color-border)]">
+            <div className="flex items-center gap-3">
+              <Clock size={24} className="text-[var(--color-text)]" />
+              <h1 className="text-2xl font-bold text-[var(--color-text)]">Watch History</h1>
+            </div>
+          </div>
+          <div className="py-20 text-center">
+            <LogIn size={64} className="text-[var(--color-text-secondary)] mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-[var(--color-text)] mb-2">Login Required</h2>
+            <p className="text-[var(--color-text-secondary)] mb-4">
+              Please login to view your watch history. Your viewing history helps you keep track of videos you've watched.
+            </p>
+            <p className="text-sm text-[var(--color-text-secondary)]">
+              Use the login button in the navbar to sign in to your account.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const historyData = [
     {
       id: 1,

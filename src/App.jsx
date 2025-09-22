@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from './Components/ThemeContext';
 
 import Navbar from './Components/Navbar'
+import Chatbot from './Components/Chatbot';
 import Home from "./page/Home";
 import VideoPage from './page/VideoPage';
 import VideosListPage from './page/VideosListPage';
@@ -33,6 +34,7 @@ function App() {
         </Route>
         <Route path="/video" element={<VideoPage />} />
       </Routes>
+      <Chatbot />
     </ThemeProvider>
   )
 }

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Sun, Moon, Search, Mail, Lock } from "lucide-react";
+import { Menu, X, Sun, Moon, Search, Mail, Lock, LogOut, User } from "lucide-react";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, googleProvider } from '../config/firebase';
+import { useEffect } from "react";
 import { useTheme } from './ThemeContext';
 import '../styles/colors.css'
 import lightLogo from '../assets/icons/Digital-logo(light).png';
@@ -26,7 +29,68 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupMode, setIsSignupMode] = useState(false);
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleEmailAuth = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (isSignupMode) {
+        await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      } else {
+        await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      }
+      setIsLoginModalOpen(false);
+      setFormData({ email: '', password: '' });
+    } catch (error) {
+      alert(error.message);
+    }
+    setLoading(false);
+  };
+
+  const handleGoogleAuth = async () => {
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      setIsLoginModalOpen(false);
+    } catch (error) {
+      alert(error.message);
+    }
+    setLoading(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setShowProfileDropdown(false);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const getDisplayName = () => {
+    return user?.displayName || user?.email?.split('@')[0] || 'User';
+  };
+
+  const getInitials = () => {
+    const name = getDisplayName();
+    return name.charAt(0).toUpperCase();
+  };
 
   const linkClasses = "block px-6 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:translate-x-2 hover:shadow-lg group border border-transparent hover:border-[var(--color-primary)]/20 text-[var(--color-text)]";
   const activeClasses = "bg-gradient-to-r from-blue-400 to-blue-500 font-bold text-white shadow-xl transform translate-x-2 border-blue-400/30";
@@ -80,15 +144,48 @@ const Navbar = () => {
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
-            <button 
-              onClick={() => setIsLoginModalOpen(true)}
-              className="relative bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] px-4 py-2 rounded-md font-medium text-[var(--color-card)] transition-colors group overflow-hidden"
-            >
-              <span className="relative">
-                Login
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </span>
-            </button>
+            
+            {user ? (
+              <div 
+                className="relative"
+                onMouseEnter={() => setShowProfileDropdown(true)}
+                onMouseLeave={() => setShowProfileDropdown(false)}
+              >
+                <button className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white font-semibold flex items-center justify-center hover:bg-[var(--color-primary-dark)] transition-colors">
+                  {getInitials()}
+                </button>
+                
+                {showProfileDropdown && (
+                  <div className="absolute right-0 top-12 w-48 bg-[var(--color-card)] rounded-lg shadow-xl border border-[var(--color-border)] py-2 z-50">
+                    <div className="px-4 py-2 border-b border-[var(--color-border)]">
+                      <p className="font-semibold text-[var(--color-text)] truncate">{getDisplayName()}</p>
+                      <p className="text-sm text-[var(--color-text-secondary)] truncate">{user.email}</p>
+                    </div>
+                    <button className="w-full px-4 py-2 text-left hover:bg-[var(--color-hover-light)] transition-colors flex items-center gap-2 text-[var(--color-text)]">
+                      <User size={16} />
+                      Profile
+                    </button>
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full px-4 py-2 text-left hover:bg-[var(--color-hover-light)] transition-colors flex items-center gap-2 text-red-500"
+                    >
+                      <LogOut size={16} />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button 
+                onClick={() => setIsLoginModalOpen(true)}
+                className="relative bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] px-4 py-2 rounded-md font-medium text-[var(--color-card)] transition-colors group overflow-hidden"
+              >
+                <span className="relative">
+                  Login
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                </span>
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -150,15 +247,19 @@ const Navbar = () => {
               </button>
             </div>
 
-            <form className="space-y-4 mb-6">
+            <form onSubmit={handleEmailAuth} className="space-y-4 mb-6">
               <div>
                 <label className="block text-sm font-medium text-[var(--color-text)] mb-2">Email</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--color-text-secondary)]" size={18} />
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full pl-10 pr-4 py-3 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
                     placeholder="Enter your email"
+                    required
                   />
                 </div>
               </div>
@@ -169,17 +270,22 @@ const Navbar = () => {
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--color-text-secondary)]" size={18} />
                   <input
                     type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
                     className="w-full pl-10 pr-4 py-3 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
                     placeholder="Enter your password"
+                    required
                   />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                disabled={loading}
+                className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSignupMode ? "Create Account" : "Sign In"}
+                {loading ? "Loading..." : (isSignupMode ? "Create Account" : "Sign In")}
               </button>
             </form>
 
@@ -192,7 +298,11 @@ const Navbar = () => {
               </div>
             </div>
 
-            <button className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-700 py-3 rounded-lg font-semibold border border-gray-300 transition-all duration-300 transform hover:scale-105">
+            <button 
+              onClick={handleGoogleAuth}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-700 py-3 rounded-lg font-semibold border border-gray-300 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
