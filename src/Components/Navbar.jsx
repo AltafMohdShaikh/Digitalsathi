@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Sun, Moon, Search, Mail, Lock, LogOut, User } from "lucide-react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Menu, X, Sun, Moon, Search, Mail, Lock, LogOut, User, Shield } from "lucide-react";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from '../config/firebase';
-import { useEffect } from "react";
+import { useUserData } from '../hooks/useUserData';
 import { useTheme } from './ThemeContext';
 import '../styles/colors.css'
 import lightLogo from '../assets/icons/Digital-logo(light).png';
@@ -29,18 +29,22 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupMode, setIsSignupMode] = useState(false);
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '', username: '' });
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { theme, toggleTheme } = useTheme();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
+  const { user, userRole, isAdmin, getDisplayName, getInitials } = useUserData();
+  const navigate = useNavigate();
+  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,7 +60,7 @@ const Navbar = () => {
         await signInWithEmailAndPassword(auth, formData.email, formData.password);
       }
       setIsLoginModalOpen(false);
-      setFormData({ email: '', password: '' });
+      setFormData({ email: '', password: '', username: '' });
     } catch (error) {
       alert(error.message);
     }
@@ -83,14 +87,7 @@ const Navbar = () => {
     }
   };
 
-  const getDisplayName = () => {
-    return user?.displayName || user?.email?.split('@')[0] || 'User';
-  };
 
-  const getInitials = () => {
-    const name = getDisplayName();
-    return name.charAt(0).toUpperCase();
-  };
 
   const linkClasses = "block px-6 py-3 rounded-xl cursor-pointer transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:translate-x-2 hover:shadow-lg group border border-transparent hover:border-[var(--color-primary)]/20 text-[var(--color-text)]";
   const activeClasses = "bg-gradient-to-r from-blue-400 to-blue-500 font-bold text-white shadow-xl transform translate-x-2 border-blue-400/30";
@@ -125,14 +122,16 @@ const Navbar = () => {
 
           {/* Center Search - Hidden on mobile */}
           <div className="flex-1 max-w-md mx-8 hidden lg:block">
-            <div className="relative">
+            <form onSubmit={handleSearch} className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--color-text-secondary)]" size={18} />
               <input
                 type="text"
-                placeholder="Search tutorials, schemes, events..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search educational videos..."
                 className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
               />
-            </div>
+            </form>
           </div>
 
           {/* Right Section */}
@@ -146,12 +145,11 @@ const Navbar = () => {
             </button>
             
             {user ? (
-              <div 
-                className="relative"
-                onMouseEnter={() => setShowProfileDropdown(true)}
-                onMouseLeave={() => setShowProfileDropdown(false)}
-              >
-                <button className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white font-semibold flex items-center justify-center hover:bg-[var(--color-primary-dark)] transition-colors">
+              <div className="relative">
+                <button 
+                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                  className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white font-semibold flex items-center justify-center hover:bg-[var(--color-primary-dark)] transition-colors"
+                >
                   {getInitials()}
                 </button>
                 
@@ -160,6 +158,12 @@ const Navbar = () => {
                     <div className="px-4 py-2 border-b border-[var(--color-border)]">
                       <p className="font-semibold text-[var(--color-text)] truncate">{getDisplayName()}</p>
                       <p className="text-sm text-[var(--color-text-secondary)] truncate">{user.email}</p>
+                      {isAdmin && (
+                        <div className="flex items-center gap-1 mt-1">
+                          <Shield size={12} className="text-yellow-500" />
+                          <span className="text-xs text-yellow-600 font-medium">Admin</span>
+                        </div>
+                      )}
                     </div>
                     <button className="w-full px-4 py-2 text-left hover:bg-[var(--color-hover-light)] transition-colors flex items-center gap-2 text-[var(--color-text)]">
                       <User size={16} />
@@ -195,14 +199,16 @@ const Navbar = () => {
         <div className="fixed left-0 top-0 h-full w-64 bg-[var(--color-card)] shadow-xl transform transition-transform duration-300 ease-in-out z-40 lg:hidden">
             {/* Mobile Search */}
             <div className="p-6 mt-16 border-b border-[var(--color-border)]">
-              <div className="relative">
+              <form onSubmit={handleSearch} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--color-text-secondary)]" size={18} />
                 <input
                   type="text"
-                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search educational videos..."
                   className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
                 />
-              </div>
+              </form>
             </div>
             <div className="p-6 space-y-3">
               <NavLink to="/" end className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
@@ -248,6 +254,23 @@ const Navbar = () => {
             </div>
 
             <form onSubmit={handleEmailAuth} className="space-y-4 mb-6">
+              {isSignupMode && (
+                <div>
+                  <label className="block text-sm font-medium text-[var(--color-text)] mb-2">Username</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--color-text-secondary)]" size={18} />
+                    <input
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 bg-[var(--color-background)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-30 border border-[var(--color-border)] transition-all duration-200 text-[var(--color-text)]"
+                      placeholder="Enter your username"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-[var(--color-text)] mb-2">Email</label>
                 <div className="relative">

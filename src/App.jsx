@@ -14,6 +14,8 @@ import WriteBlog from './page/WriteBlog';
 import EventPage from './page/EventPage';
 import Layout from './page/Layout';
 import GovernmentPage from './page/GovernmentPage';
+import MasterPage from './page/MasterPage';
+import SearchPage from './page/SearchPage';
 import Needhelp from './Components/Needhelp';
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/write-blog" element={<WriteBlog />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/master" element={<MasterPage />} />
         </Route>
         <Route path="/video" element={<VideoPage />} />
       </Routes>

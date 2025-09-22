@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/colors.css";
 import VideoCard from "../Components/VideoCard";
 import thumbnail8 from "../assets/images/thumbnail8.png";
 
-export default function VideosListPage() {
+export default function SearchPage() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [nextPageToken, setNextPageToken] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  const searchQuery = new URLSearchParams(location.search).get('q');
 
   useEffect(() => {
-    fetchDigitalLiteracyVideos();
-  }, []);
+    if (searchQuery) {
+      searchVideos(searchQuery);
+    }
+  }, [searchQuery]);
 
-  const fetchDigitalLiteracyVideos = async (pageToken = '') => {
+  const searchVideos = async (query, pageToken = '') => {
     try {
       setLoading(true);
       const API_KEY = 'AIzaSyAL6t0diHpbGRoKDE21amjR4ft4d6MUISc';
-      const searchQueries = [
-        'आत्मविश्वास कैसे बढ़ाएं public speaking hindi',
-        'communication skills hindi tutorial',
-        'programming सीखें beginners के लिए hindi',
-        'coding कैसे शुरू करें hindi tutorial',
-        'personality development tips hindi',
-        'interview skills training hindi',
-        'english बोलना सीखें hindi',
-        'coding basics hindi tutorial',
-        'soft skills development hindi',
-        'career guidance students hindi'
-      ];
       
-      const randomQuery = searchQueries[Math.floor(Math.random() * searchQueries.length)];
-      const maxResults = 25; // Request more to account for filtering
+      // Add educational context to search query
+      const educationalQuery = `${query} tutorial education learning hindi`;
       
-      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${encodeURIComponent(randomQuery)}&type=video&relevanceLanguage=hi&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${encodeURIComponent(educationalQuery)}&type=video&relevanceLanguage=hi&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
       
       const response = await fetch(searchUrl);
       const data = await response.json();
@@ -55,13 +50,13 @@ export default function VideosListPage() {
             const seconds = parseInt(match[3]) || 0;
             
             const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-            return totalSeconds > 60; // Filter out videos shorter than 1 minute (shorts)
+            return totalSeconds > 60; // Filter out shorts
           })
           .map(video => ({
             id: video.id,
             title: video.snippet.title,
             videoUrl: `https://www.youtube.com/watch?v=${video.id}`,
-            category: 'Digital Literacy',
+            category: 'Educational',
             duration: formatDuration(video.contentDetails.duration),
             views: formatViews(video.statistics.viewCount),
             timeAgo: getTimeAgo(video.snippet.publishedAt),
@@ -80,15 +75,15 @@ export default function VideosListPage() {
         setNextPageToken(data.nextPageToken || '');
       }
     } catch (error) {
-      console.error('Error fetching videos:', error);
+      console.error('Error searching videos:', error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleShowMore = () => {
-    if (nextPageToken) {
-      fetchDigitalLiteracyVideos(nextPageToken);
+    if (nextPageToken && searchQuery) {
+      searchVideos(searchQuery, nextPageToken);
     }
   };
 
@@ -137,20 +132,28 @@ export default function VideosListPage() {
     <div className="px-6 bg-[var(--color-background)] min-h-screen">
       <section className="py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">All Videos</h1>
+          <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
+            Search Results for "{searchQuery}"
+          </h1>
           <p className="text-[var(--color-text-secondary)]">
-            Discover curated digital literacy and computer skills videos
+            Educational videos and tutorials related to your search
           </p>
         </div>
         
         {loading && videos.length === 0 ? (
           <div className="flex justify-center items-center py-12">
-            <div className="text-[var(--color-text-secondary)]">Loading digital literacy videos...</div>
+            <div className="text-[var(--color-text-secondary)]">Searching for educational videos...</div>
           </div>
         ) : videos.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-[var(--color-text-secondary)] text-lg">No videos found.</p>
-            <p className="text-[var(--color-text-secondary)] text-sm mt-2">Please try again later.</p>
+            <p className="text-[var(--color-text-secondary)] text-lg">No educational videos found for "{searchQuery}".</p>
+            <p className="text-[var(--color-text-secondary)] text-sm mt-2">Try different keywords or browse our video collection.</p>
+            <button 
+              onClick={() => navigate('/videos')}
+              className="mt-4 px-6 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-dark)] transition-colors"
+            >
+              Browse All Videos
+            </button>
           </div>
         ) : (
           <>
@@ -167,7 +170,7 @@ export default function VideosListPage() {
                   disabled={loading}
                   className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-dark)] transition-colors disabled:opacity-50"
                 >
-                  {loading ? 'Loading...' : 'Show More Videos'}
+                  {loading ? 'Loading...' : 'Show More Results'}
                 </button>
               </div>
             )}
