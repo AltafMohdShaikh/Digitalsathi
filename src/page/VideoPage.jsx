@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Play, ThumbsUp, ThumbsDown, Share2, Download, Bell, Eye, Clock, ArrowLeft } from "lucide-react";
+import { formatDuration, formatViews, getTimeAgo, extractVideoId, getEmbedUrl } from "../utils/videoUtils";
+import { searchVideos } from "../services/youtubeService";
 
 const VideoPage = () => {
   const location = useLocation();
@@ -21,88 +23,14 @@ const VideoPage = () => {
   
   const fetchRelatedVideos = async (channelName) => {
     try {
-      const API_KEY = 'AIzaSyAL6t0diHpbGRoKDE21amjR4ft4d6MUISc';
-      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&q=${encodeURIComponent(channelName)}&type=video&relevanceLanguage=hi&key=${API_KEY}`;
-      
-      const response = await fetch(searchUrl);
-      const data = await response.json();
-      
-      if (data.items) {
-        const videoIds = data.items.map(item => item.id.videoId).join(',');
-        const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoIds}&key=${API_KEY}`;
-        
-        const detailsResponse = await fetch(detailsUrl);
-        const detailsData = await detailsResponse.json();
-        
-        const videosList = detailsData.items.map(video => ({
-          id: video.id,
-          title: video.snippet.title,
-          channel: video.snippet.channelTitle,
-          views: formatViews(video.statistics.viewCount),
-          timeAgo: getTimeAgo(video.snippet.publishedAt),
-          duration: formatDuration(video.contentDetails.duration),
-          thumbnail: video.snippet.thumbnails.medium?.url,
-          videoUrl: `https://www.youtube.com/watch?v=${video.id}`
-        }));
-        
-        setRelatedVideos(videosList.slice(0, 6));
-      }
+      const result = await searchVideos(channelName, '', 6);
+      setRelatedVideos(result.videos.slice(0, 6));
     } catch (error) {
       console.error('Error fetching related videos:', error);
     }
   };
   
-  const formatViews = (viewCount) => {
-    if (!viewCount) return '--';
-    const count = parseInt(viewCount);
-    if (count >= 1000000) return `${(count / 1000000).toFixed(1)}M`;
-    if (count >= 1000) return `${(count / 1000).toFixed(1)}K`;
-    return count.toString();
-  };
-  
-  const formatDuration = (duration) => {
-    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    if (!match) return '--:--';
-    const hours = parseInt(match[1]) || 0;
-    const minutes = parseInt(match[2]) || 0;
-    const seconds = parseInt(match[3]) || 0;
-    if (hours > 0) return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-  
-  const getTimeAgo = (dateString) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const diffYears = Math.floor(diffDays / 365);
-    if (diffYears > 0) return `${diffYears} year${diffYears > 1 ? 's' : ''} ago`;
-    const diffMonths = Math.floor(diffDays / 30);
-    if (diffMonths > 0) return `${diffMonths} month${diffMonths > 1 ? 's' : ''} ago`;
-    const diffWeeks = Math.floor(diffDays / 7);
-    if (diffWeeks > 0) return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''} ago`;
-    if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-    return 'Today';
-  };
-  
-  const extractVideoId = (url) => {
-    try {
-      const urlObj = new URL(url);
-      if (urlObj.hostname.includes('youtube.com')) {
-        return urlObj.searchParams.get('v');
-      } else if (urlObj.hostname.includes('youtu.be')) {
-        return urlObj.pathname.slice(1);
-      }
-    } catch {
-      return null;
-    }
-    return null;
-  };
-  
-  const getEmbedUrl = (url) => {
-    const videoId = extractVideoId(url);
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-  };
+
 
 
 

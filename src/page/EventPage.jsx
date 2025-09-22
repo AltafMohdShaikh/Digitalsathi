@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Calendar, MapPin, Clock, Users, ArrowRight, Filter, Presentation, BookOpen, Award, Target, Lightbulb, Star, Trophy, Megaphone, Network, Handshake, Coffee, Mic, Video, Headphones, Bookmark } from "lucide-react";
+import HeroSection from "../Components/HeroSection";
 
 const EventPage = () => {
   const [filter, setFilter] = useState('all');
@@ -67,74 +68,12 @@ const EventPage = () => {
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{ 
-            background: 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
-          }}
-        ></div>
-        <div className="relative text-center py-20 px-4">
-          {/* Event Icons */}
-          <div className="absolute top-4 right-4 opacity-20 transform rotate-12">
-            <Calendar size={64} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-4 left-4 opacity-20 transform -rotate-12">
-            <Presentation size={60} className="text-green-500" />
-          </div>
-          <div className="absolute top-8 left-8 opacity-15 transform rotate-45">
-            <BookOpen size={56} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
-            <Award size={52} className="text-green-500" />
-          </div>
-          <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90 hidden lg:block">
-            <Target size={48} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45 hidden lg:block">
-            <Lightbulb size={44} className="text-green-500" />
-          </div>
-          <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60 hidden lg:block">
-            <Star size={40} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60 hidden lg:block">
-            <Trophy size={36} className="text-green-500" />
-          </div>
-          <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15 hidden lg:block">
-            <Megaphone size={32} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15 hidden lg:block">
-            <Network size={28} className="text-green-500" />
-          </div>
-          <div className="absolute top-6 left-16 opacity-8 transform rotate-75 hidden lg:block">
-            <Handshake size={24} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75 hidden lg:block">
-            <Coffee size={24} className="text-green-500" />
-          </div>
-          <div className="absolute top-24 right-20 opacity-8 transform rotate-30 hidden lg:block">
-            <Mic size={20} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30 hidden lg:block">
-            <Video size={20} className="text-green-500" />
-          </div>
-          <div className="absolute top-28 left-24 opacity-6 transform rotate-120 hidden lg:block">
-            <Headphones size={16} className="text-green-500" />
-          </div>
-          <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120 hidden lg:block">
-            <Bookmark size={16} className="text-green-500" />
-          </div>
-          <div className="max-w-4xl mx-auto relative z-10">
-            <h1 className="text-6xl font-bold mb-6 text-[var(--color-text)]">
-              Discover Amazing Events
-            </h1>
-            <p className="text-xl leading-relaxed max-w-2xl mx-auto text-[var(--color-text-secondary)]">
-              Connect, learn, and grow with our carefully curated collection of events designed to inspire and educate professionals across industries.
-            </p>
-          </div>
-        </div>
-      </div>
+      <HeroSection 
+        title="Discover Amazing Events"
+        subtitle="Connect, learn, and grow with our carefully curated collection of events designed to inspire and educate professionals across industries."
+        icons={[Calendar, Presentation, BookOpen, Award, Target, Lightbulb, Star, Trophy, Megaphone, Network, Handshake, Coffee, Mic, Video, Headphones, Bookmark]}
+        iconColor="text-green-500"
+      />
 
       {/* Filter Section */}
       <div className="max-w-7xl mt-5 mx-auto px-6 mb-8">

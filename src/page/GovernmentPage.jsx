@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, ExternalLink, Users, Calendar, IndianRupee, Award, Building, Shield, Scale, Gavel, Briefcase, CreditCard, Home, GraduationCap, Heart, Leaf, Zap, Car, FileText, Globe, CheckCircle } from "lucide-react";
+import HeroSection from "../Components/HeroSection";
 
 const GovernmentPage = () => {
   const [expandedCard, setExpandedCard] = useState(null);
@@ -86,80 +87,12 @@ const GovernmentPage = () => {
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{ 
-            background: 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
-          }}
-        ></div>
-        <div className="relative text-center py-20 px-4">
-          {/* Government Icons */}
-          <div className="absolute top-4 right-4 opacity-20 transform rotate-12">
-            <Building size={64} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-4 left-4 opacity-20 transform -rotate-12">
-            <Shield size={60} className="text-orange-500" />
-          </div>
-          <div className="absolute top-8 left-8 opacity-15 transform rotate-45">
-            <Scale size={56} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-8 right-8 opacity-15 transform -rotate-30">
-            <Gavel size={52} className="text-orange-500" />
-          </div>
-          <div className="absolute top-12 left-1/3 opacity-12 transform rotate-90 hidden lg:block">
-            <Briefcase size={48} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-12 right-1/4 opacity-12 transform -rotate-45 hidden lg:block">
-            <CreditCard size={44} className="text-orange-500" />
-          </div>
-          <div className="absolute top-16 right-1/3 opacity-10 transform rotate-60 hidden lg:block">
-            <Home size={40} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-16 left-1/4 opacity-10 transform -rotate-60 hidden lg:block">
-            <GraduationCap size={36} className="text-orange-500" />
-          </div>
-          <div className="absolute top-20 left-1/2 opacity-10 transform rotate-15 hidden lg:block">
-            <Heart size={32} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-20 right-1/2 opacity-10 transform -rotate-15 hidden lg:block">
-            <Leaf size={28} className="text-orange-500" />
-          </div>
-          <div className="absolute top-6 left-16 opacity-8 transform rotate-75 hidden lg:block">
-            <Zap size={24} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-6 right-16 opacity-8 transform -rotate-75 hidden lg:block">
-            <Car size={24} className="text-orange-500" />
-          </div>
-          <div className="absolute top-24 right-20 opacity-8 transform rotate-30 hidden lg:block">
-            <FileText size={20} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-24 left-20 opacity-8 transform -rotate-30 hidden lg:block">
-            <Users size={20} className="text-orange-500" />
-          </div>
-          <div className="absolute top-28 left-24 opacity-6 transform rotate-120 hidden lg:block">
-            <Globe size={16} className="text-orange-500" />
-          </div>
-          <div className="absolute bottom-28 right-24 opacity-6 transform -rotate-120 hidden lg:block">
-            <CheckCircle size={16} className="text-orange-500" />
-          </div>
-          <div className="max-w-4xl mx-auto relative z-10">
-            <h1 
-              className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent"
-              style={{ color: '#2563EB' }}
-            >
-              Government Schemes
-            </h1>
-            <p 
-              className="text-xl leading-relaxed max-w-2xl mx-auto"
-              style={{ color: '#6B7280' }}
-            >
-              Explore various government initiatives designed to empower citizens, promote entrepreneurship, and enhance quality of life across India.
-            </p>
-          </div>
-        </div>
-      </div>
+      <HeroSection 
+        title="Government Schemes"
+        subtitle="Explore various government initiatives designed to empower citizens, promote entrepreneurship, and enhance quality of life across India."
+        icons={[Building, Shield, Scale, Gavel, Briefcase, CreditCard, Home, GraduationCap, Heart, Leaf, Zap, Car, FileText, Users, Globe, CheckCircle]}
+        iconColor="text-orange-500"
+      />
 
       {/* Schemes Grid */}
       <div className="max-w-6xl mx-auto mt-5 px-6 pb-16">
