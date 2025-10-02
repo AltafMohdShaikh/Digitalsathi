@@ -1,15 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/colors.css";
 import { platforms } from "../Components/homeData";
 
-const PlatformCard = ({ platform, index }) => {
+const PlatformCard = ({ platform, index, onClick }) => {
   const colors = [
     "bg-blue-500", "bg-green-500", "bg-purple-500", "bg-red-500", 
     "bg-yellow-500", "bg-indigo-500", "bg-pink-500", "bg-teal-500"
   ];
   
   return (
-    <div className="bg-[var(--color-card)] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-[var(--color-border)] group cursor-pointer">
+    <div 
+      onClick={() => onClick(platform)}
+      className="bg-[var(--color-card)] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-[var(--color-border)] group cursor-pointer"
+    >
       <div className="flex flex-col items-center text-center">
         <div className={`w-16 h-16 ${colors[index % colors.length]} rounded-full mb-4 group-hover:scale-110 transition-transform duration-300`}></div>
         <h3 className="font-semibold text-lg text-[var(--color-text)] group-hover:text-[var(--color-primary)] transition-colors">
@@ -21,10 +25,16 @@ const PlatformCard = ({ platform, index }) => {
 };
 
 export default function PlatformsPage() {
+  const navigate = useNavigate();
+  
   const allPlatforms = [
     ...platforms,
     "Facebook", "Instagram", "LinkedIn", "Amazon", "Flipkart"
   ];
+
+  const handlePlatformClick = (platform) => {
+    navigate(`/search?q=${encodeURIComponent(platform)}`);
+  };
 
   return (
     <div className="px-6 bg-[var(--color-background)] min-h-screen">
@@ -38,7 +48,12 @@ export default function PlatformsPage() {
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
           {allPlatforms.map((platform, index) => (
-            <PlatformCard key={index} platform={platform} index={index} />
+            <PlatformCard 
+              key={index} 
+              platform={platform} 
+              index={index} 
+              onClick={handlePlatformClick}
+            />
           ))}
         </div>
       </section>
