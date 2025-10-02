@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import "../styles/colors.css";
 import { Save, Eye, ArrowLeft, Image, Bold, Italic, List } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth';
+import { addPendingBlog } from '../services/databaseService';
+import { createUserDocument } from '../services/userService';
 
 export default function WriteBlog() {
+  const { user } = useSupabaseAuth();
+  const navigate = useNavigate();
   const [blogData, setBlogData] = useState({
     title: "",
     excerpt: "",
     content: "",
     category: "Digital Literacy"
   });
+  const [loading, setLoading] = useState(false);
 
   const categories = [
     "Digital Literacy",
@@ -28,10 +34,38 @@ export default function WriteBlog() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle blog submission
-    console.log("Blog submitted:", blogData);
+    if (!user) {
+      alert('Please login to publish a blog');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Ensure user exists in database
+      await createUserDocument(user);
+      
+      const blogPayload = {
+        title: blogData.title,
+        excerpt: blogData.excerpt,
+        content: blogData.content,
+        category: blogData.category,
+        author_id: user.id,
+        author_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Anonymous'
+      };
+
+      const { error } = await addPendingBlog(blogPayload);
+      if (error) throw error;
+
+      alert('Blog submitted for approval!');
+      navigate('/blog');
+    } catch (error) {
+      console.error('Error publishing blog:', error);
+      alert('Error publishing blog: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,10 +93,11 @@ export default function WriteBlog() {
             </button>
             <button 
               onClick={handleSubmit}
-              className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-4 py-2 sm:px-6 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+              disabled={loading || !user}
+              className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-4 py-2 sm:px-6 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base disabled:opacity-50"
             >
               <Save size={16} />
-              <span className="hidden sm:inline">Publish</span>
+              <span className="hidden sm:inline">{loading ? 'Publishing...' : 'Publish'}</span>
             </button>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, X, Bot, User, LogIn } from 'lucide-react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, model } from '../config/firebase';
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth';
+import { model } from '../config/supabase';
 
 // Simple markdown parser for chat messages
 const parseMarkdown = (text) => {
@@ -46,7 +46,7 @@ const MessageContent = ({ text }) => {
 };
 
 const Chatbot = () => {
-  const [user, loading] = useAuthState(auth);
+  const { user, loading } = useSupabaseAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -98,7 +98,7 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const userName = user?.displayName || user?.email?.split('@')[0] || 'User';
+      const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
       const prompt = `You are Digital Sathi AI, a helpful assistant for digital literacy and government schemes in India. 
       Context: You help users with digital literacy, government schemes, technology tutorials, and general guidance.
       User: ${userName}
@@ -161,7 +161,7 @@ const Chatbot = () => {
             <div>
               <h3 className="font-semibold">Digital Sathi AI</h3>
               <p className="text-xs opacity-90">
-                {user ? `Hello, ${user?.displayName || user?.email?.split('@')[0] || 'User'}!` : 'Please login to chat'}
+                {user ? `Hello, ${user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'}!` : 'Please login to chat'}
               </p>
             </div>
           </div>

@@ -2,12 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { Send, Mail, Phone, CheckCircle, AlertCircle, Clock, HelpCircle, MessageCircle, Headphones, Shield, Users, Heart, Lightbulb, Search, BookOpen, Star, Zap, Globe, Settings, Info, LifeBuoy, Compass, LogIn } from "lucide-react"
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../config/firebase'
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth'
 import emailjs from '@emailjs/browser'
 
 export default function NeedHelp() {
-  const [user, loading] = useAuthState(auth)
+  const { user, loading } = useSupabaseAuth()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,7 +22,7 @@ export default function NeedHelp() {
     if (user) {
       setFormData(prev => ({
         ...prev,
-        name: user.displayName || '',
+        name: user.user_metadata?.full_name || '',
         email: user.email || ''
       }))
     }
@@ -86,7 +85,7 @@ New message from Digital Sathi:
 Name: ${formData.name}
 Email: ${formData.email}
 Category: ${formData.category}
-User ID: ${user.uid}
+User ID: ${user.id}
 
 Message:
 ${formData.message}
@@ -103,7 +102,7 @@ Sent from Digital Sathi Contact Form`
     // Show success message
     setSubmitStatus("success")
     setFormData({ 
-      name: user.displayName || '', 
+      name: user.user_metadata?.full_name || '', 
       email: user.email || '', 
       category: "general", 
       subject: "", 

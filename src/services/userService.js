@@ -1,37 +1,35 @@
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { supabase } from '../config/supabase';
 
 // Add user to Firestore when they register
 export const createUserDocument = async (user, customUsername = null) => {
-  if (!user) {
-    console.log('No user provided to createUserDocument');
-    return;
-  }
+  if (!user) return;
   
   try {
-    console.log('Creating user document for:', user.email);
-    const userRef = doc(db, 'Users', user.uid);
-    const userSnap = await getDoc(userRef);
+    const { data: existingUser, error: selectError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id)
+      .single();
     
-    // Only create if user doesn't exist
-    if (!userSnap.exists()) {
+    // If user doesn't exist, create them
+    if (selectError && selectError.code === 'PGRST116') {
+      const adminEmails = ['altafmohdshaikh@gmail.com', 'admin@digitalsathi.com'];
       const userData = {
-        Email: user.email,
-        UserName: customUsername || user.displayName || user.email?.split('@')[0] || 'User',
-        Role: user.email === 'altafmohdshaikh@gmail.com' ? 'Admin' : 'Visitor',
-        createdAt: new Date().toISOString(),
-        uid: user.uid
+        id: user.id,
+        email: user.email,
+        username: customUsername || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+        role: adminEmails.includes(user.email) ? 'Admin' : 'Visitor',
+        created_at: new Date().toISOString()
       };
       
-      console.log('Creating new user document:', userData);
-      await setDoc(userRef, userData);
-      console.log('User document created successfully');
-      return userData;
-    } else {
-      console.log('User document already exists:', userSnap.data());
+      const { data, error } = await supabase.from('users').insert([userData]).select();
+      if (error) throw error;
+      console.log('User created:', data[0]);
+      return data[0];
     }
     
-    return userSnap.data();
+    if (selectError) throw selectError;
+    return existingUser;
   } catch (error) {
     console.error('Error in createUserDocument:', error);
     throw error;
@@ -40,24 +38,17 @@ export const createUserDocument = async (user, customUsername = null) => {
 
 // Get user role from Firestore
 export const getUserRole = async (userId) => {
-  if (!userId) {
-    console.log('No userId provided to getUserRole');
-    return 'Visitor';
-  }
+  if (!userId) return 'Visitor';
   
   try {
-    console.log('Getting user role for:', userId);
-    const userRef = doc(db, 'Users', userId);
-    const userSnap = await getDoc(userRef);
+    const { data, error } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', userId)
+      .single();
     
-    if (userSnap.exists()) {
-      const userData = userSnap.data();
-      console.log('User data found:', userData);
-      return userData.Role || 'Visitor';
-    } else {
-      console.log('No user document found for:', userId);
-    }
-    return 'Visitor';
+    if (error) throw error;
+    return data?.role || 'Visitor';
   } catch (error) {
     console.error('Error getting user role:', error);
     return 'Visitor';

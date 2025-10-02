@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useUserRole } from './useUserRole';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { supabase } from '../config/supabase';
 
 export const useUserData = () => {
   const { user, userRole, isAdmin, loading } = useUserRole();
@@ -12,12 +11,14 @@ export const useUserData = () => {
     const fetchUserData = async () => {
       if (user) {
         try {
-          const userRef = doc(db, 'Users', user.uid);
-          const userSnap = await getDoc(userRef);
+          const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', user.id)
+            .single();
           
-          if (userSnap.exists()) {
-            setUserData(userSnap.data());
-          }
+          if (error) throw error;
+          setUserData(data);
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
@@ -33,7 +34,7 @@ export const useUserData = () => {
   }, [user, loading]);
 
   const getDisplayName = () => {
-    return userData?.UserName || user?.displayName || user?.email?.split('@')[0] || 'User';
+    return userData?.username || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
   };
 
   const getInitials = () => {

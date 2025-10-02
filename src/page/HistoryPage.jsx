@@ -1,8 +1,7 @@
 import React from "react";
 import "../styles/colors.css";
 import { Clock, X, LogIn } from "lucide-react";
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../config/firebase';
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth';
 import thumbnail8 from "../assets/images/thumbnail8.png";
 
 const HistoryItem = ({ item }) => {
@@ -37,7 +36,7 @@ const HistoryItem = ({ item }) => {
 };
 
 export default function HistoryPage() {
-  const [user, loading] = useAuthState(auth);
+  const { user, loading } = useSupabaseAuth();
 
   if (loading) {
     return (

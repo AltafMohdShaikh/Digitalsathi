@@ -10,6 +10,7 @@ import VideosListPage from './page/VideosListPage';
 import PlatformsPage from './page/PlatformsPage';
 import HistoryPage from './page/HistoryPage';
 import BlogPage from './page/BlogPage';
+import BlogDetail from './page/BlogDetail';
 import WriteBlog from './page/WriteBlog';
 import EventPage from './page/EventPage';
 import Layout from './page/Layout';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/platforms" element={<PlatformsPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/write-blog" element={<WriteBlog />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/master" element={<MasterPage />} />

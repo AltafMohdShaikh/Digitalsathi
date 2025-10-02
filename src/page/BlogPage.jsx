@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/colors.css";
 import { PenTool, Calendar, User, Eye, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { getBlogs } from '../services/databaseService';
 
 const BlogCard = ({ blog }) => {
   return (
@@ -38,54 +39,36 @@ const BlogCard = ({ blog }) => {
           
         </div>
         
-        <button className="w-full bg-gradient-to-r from-[var(--color-primary)] to-purple-500 hover:from-[var(--color-primary-dark)] hover:to-purple-600 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg transform hover:scale-105">
-          Read More
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
-        </button>
+        <Link to={`/blog/${blog.id}`}>
+          <button className="w-full bg-gradient-to-r from-[var(--color-primary)] to-purple-500 hover:from-[var(--color-primary-dark)] hover:to-purple-600 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg transform hover:scale-105">
+            Read More
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+          </button>
+        </Link>
       </div>
     </div>
   );
 };
 
 export default function BlogPage() {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Getting Started with Digital Payments in India",
-      excerpt: "Learn how to safely use UPI, digital wallets, and online banking for your daily transactions. A comprehensive guide for beginners.",
-      author: "Digital Sathi Team",
-      date: "Dec 15, 2024",
-      views: "2.3K",
-      category: "Digital Payments"
-    },
-    {
-      id: 2,
-      title: "Understanding Aadhaar Services Online",
-      excerpt: "Complete guide to accessing Aadhaar services online, updating information, and downloading your Aadhaar card digitally.",
-      author: "Admin",
-      date: "Dec 12, 2024",
-      views: "1.8K",
-      category: "Government Services"
-    },
-    {
-      id: 3,
-      title: "Social Media Safety Tips for Everyone",
-      excerpt: "Essential tips to stay safe on social media platforms, protect your privacy, and avoid common online scams.",
-      author: "Security Expert",
-      date: "Dec 10, 2024",
-      views: "3.1K",
-      category: "Digital Safety"
-    },
-    {
-      id: 4,
-      title: "How to Apply for Government Schemes Online",
-      excerpt: "Step-by-step process to apply for various government schemes and benefits through official online portals.",
-      author: "Policy Guide",
-      date: "Dec 8, 2024",
-      views: "2.7K",
-      category: "Government Schemes"
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = async () => {
+    try {
+      const { data, error } = await getBlogs();
+      if (error) throw error;
+      setBlogs(data || []);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   return (
     <div className="px-6 bg-[var(--color-background)] min-h-screen">
@@ -107,11 +90,30 @@ export default function BlogPage() {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((blog) => (
-            <BlogCard key={blog.id} blog={blog} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-8">
+            <p className="text-[var(--color-text-secondary)]">Loading blogs...</p>
+          </div>
+        ) : blogs.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-[var(--color-text-secondary)]">No blogs available yet.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map((blog) => (
+              <BlogCard key={blog.id} blog={{
+                ...blog,
+                date: new Date(blog.created_at).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'short', 
+                  day: 'numeric' 
+                }),
+                author: blog.author_name,
+                views: '0'
+              }} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

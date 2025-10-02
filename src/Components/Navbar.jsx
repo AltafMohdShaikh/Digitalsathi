@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, Sun, Moon, Search, Mail, Lock, LogOut, User, Shield } from "lucide-react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import { auth, googleProvider } from '../config/firebase';
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth';
+import { supabase } from '../config/supabase';
 import { useUserData } from '../hooks/useUserData';
 import { useTheme } from './ThemeContext';
 import '../styles/colors.css'
@@ -34,6 +34,7 @@ const Navbar = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { theme, toggleTheme } = useTheme();
+  const { signInWithGoogle, signOut: supabaseSignOut } = useSupabaseAuth();
   const { user, userRole, isAdmin, getDisplayName, getInitials } = useUserData();
   const navigate = useNavigate();
   
@@ -55,9 +56,22 @@ const Navbar = () => {
     setLoading(true);
     try {
       if (isSignupMode) {
-        await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        const { error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              full_name: formData.username
+            }
+          }
+        });
+        if (error) throw error;
       } else {
-        await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        const { error } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password
+        });
+        if (error) throw error;
       }
       setIsLoginModalOpen(false);
       setFormData({ email: '', password: '', username: '' });
@@ -70,7 +84,8 @@ const Navbar = () => {
   const handleGoogleAuth = async () => {
     setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      const { error } = await signInWithGoogle();
+      if (error) throw error;
       setIsLoginModalOpen(false);
     } catch (error) {
       alert(error.message);
@@ -80,7 +95,8 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      const { error } = await supabaseSignOut();
+      if (error) throw error;
       setShowProfileDropdown(false);
     } catch (error) {
       alert(error.message);
@@ -235,6 +251,14 @@ const Navbar = () => {
               <NavLink to="/needhelp" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
                 <span className="group-hover:font-medium transition-all duration-300">Need Help?</span>
               </NavLink>
+              {isAdmin && (
+                <NavLink to="/master" className={({ isActive }) => (isActive ? `${linkClasses} ${activeClasses}` : linkClasses)} onClick={() => setIsMobileMenuOpen(false)}>
+                  <div className="flex items-center gap-2">
+                    <Shield size={16} className="text-yellow-500" />
+                    <span className="group-hover:font-medium transition-all duration-300">Master Panel</span>
+                  </div>
+                </NavLink>
+              )}
             </div>
         </div>
       )}

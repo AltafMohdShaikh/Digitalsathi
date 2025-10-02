@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../config/firebase';
+import { useSupabaseAuth } from './useSupabaseAuth';
 import { createUserDocument, getUserRole } from '../services/userService';
 
 export const useUserRole = () => {
-  const [user, loading] = useAuthState(auth);
+  const { user, loading } = useSupabaseAuth();
   const [userRole, setUserRole] = useState('Visitor');
   const [roleLoading, setRoleLoading] = useState(true);
 
@@ -29,7 +28,7 @@ export const useUserRole = () => {
           }
           
           // Get user role
-          const role = await getUserRole(user.uid);
+          const role = await getUserRole(user.id);
           console.log('User role determined:', role);
           setUserRole(role);
         } catch (error) {
